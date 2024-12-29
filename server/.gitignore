@@ -1,0 +1,33 @@
+# Environment files
+.env
+.env.local
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build artifacts
+dist/
+build/
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# IDE/editor specific files
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Test and coverage files
+coverage/
+*.spec.js
+*.test.js
+
+# Miscellaneous
+*.pid
+*.lock
