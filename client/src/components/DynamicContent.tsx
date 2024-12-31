@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 const renderers = {
   form: ({id, children, commands}) => (
     <form id={id} className="space-y-4 border p-4 rounded">
@@ -36,56 +38,21 @@ const renderers = {
 };
 
 const DynamicContent = () => {
-  const data = {
-    commands: ["submit"],
-    content: [
-      {
-        "id": "1",
-        "domType": "form",
-        "content": [
-          {
-            "id": "2",
-            "domType": "input",
-            "type": "text",
-            "label": "Field 1",
-            "required": true
-          },
-          {
-            "id": "3",
-            "domType": "input",
-            "type": "text",
-            "label": "Field 2",
-            "required": true
-          },
-          {
-            "id": "4",
-            "domType": "input",
-            "type": "number",
-            "label": "Field 3",
-            "required": true
-          },
-          {
-            "id": "5",
-            "domType": "input",
-            "type": "checkbox",
-            "label": "Field 4"
-          }
-        ]
-      },
-      {
-        "id": "6",
-        "domType": "div",
-        "content": [
-          {
-            "id": "7",
-            "domType": "input",
-            "type": "checkbox",
-            "label": "Field 4"
-          }
-        ]
+  const [formData, setFormData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/form-data');
+        const data = await response.json();
+        setFormData(data);
+      } catch (error) {
+        console.error('Error fetching form data:', error);
       }
-    ]
-  };
+    };
+
+    fetchData();
+  }, []);
 
   const renderNode = (node, commands) => {
     const Renderer = renderers[node.domType];
@@ -102,9 +69,11 @@ const DynamicContent = () => {
     );
   };
 
+  
+  if (!formData) return <div>Loading...</div>;
   return (
     <div className="max-w-md mx-auto p-6">
-      {data.content.map(node => renderNode(node, data.commands))}
+      {formData.content.map(node => renderNode(node, formData.commands))}
     </div>
   );
 };

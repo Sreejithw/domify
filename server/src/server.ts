@@ -58,7 +58,6 @@ const data: FormData = {
       }
     ]
 };
-
 app.get('/api/form-data', (_req: Request, res: Response) => {
     res.json(data);
 });
@@ -66,4 +65,3 @@ app.get('/api/form-data', (_req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-  
